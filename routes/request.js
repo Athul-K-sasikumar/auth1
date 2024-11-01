@@ -2,12 +2,11 @@ var express = require('express');
 var router = express.Router();
 
 const dotenv = require('dotenv');
-dotenv.config(); // Load environment variables from .env file
+dotenv.config(); 
 
 const {OAuth2Client} = require('google-auth-library');
 
 
-/* GET users listing. */
 router.post('/', async function(req, res, next) {
   res.header("Access-Control-Allow-Origin", 'http://localhost:5173');
   res.header("Access-Control-Allow-Credentials", 'true');
@@ -20,7 +19,6 @@ router.post('/', async function(req, res, next) {
       redirectURL
     );
 
-    // Generate the url that will be used for the consent dialog.
     const authorizeUrl = oAuth2Client.generateAuthUrl({
       access_type: 'offline',
       scope: 'https://www.googleapis.com/auth/userinfo.profile  openid ',

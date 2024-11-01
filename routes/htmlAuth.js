@@ -1,11 +1,10 @@
 var express = require('express');
 var router = express.Router();
 const dotenv = require('dotenv');
-dotenv.config(); // Load environment variables from .env file
+dotenv.config(); 
 
 const {OAuth2Client} = require('google-auth-library');
 
-/* GET home page. */
 router.post('/', async function(req, res, next) {
 const credential = req.params.credential;
 console.log('Credential',credential);
@@ -19,16 +18,14 @@ console.log('Token',token)
 async function verify() {
   const ticket = await client.verifyIdToken({
       idToken: token,
-      audience: process.env.SECRET_CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
-      // Or, if multiple clients access the backend:
-      //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+      audience: process.env.SECRET_CLIENT_ID,  
+     
   });
   const payload = ticket.getPayload();
   const userid = payload['sub'];
   console.log("payload",payload);
   console.log("userid",userid)
-  // If request specified a G Suite domain:
-  // const domain = payload['hd'];
+
 }
 await verify().catch(console.error);
 res.send('testing 123')
